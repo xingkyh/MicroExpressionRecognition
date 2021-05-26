@@ -1,6 +1,7 @@
 """
 desc: 可视化训练过程
 """
+import numpy as np
 
 
 def load_file(filename):
@@ -34,7 +35,7 @@ def plot_acc(his, ds):
 def plot_feature_map():
     from model import CNN
     model = CNN()
-    model.load_weights('../models/cnn3_best_weights.h5')
+    model.load_weights('./models/cnn3_best_weights.h5')
 
     def get_feature_map(model, layer_index, channels, input_img):
         from tensorflow.keras import backend as K
@@ -49,14 +50,14 @@ def plot_feature_map():
         plt.savefig('rst.png')
         plt.show()
         import cv2
-        img = cv2.cvtColor(cv2.imread('../data/demo.jpg'), cv2.cv2.COLOR_BGR2GRAY)
+        img = cv2.cvtColor(cv2.imread('./data/demo.jpg'), cv2.cv2.COLOR_BGR2GRAY)
         img.shape = (1, 48, 48, 1)
         get_feature_map(model, 4, 32, img)
 
 
 if __name__ == '__main__':
     import numpy as np
-    history = load_file('../train_results/his_cnn2.pkl')
+    history = load_file('./train_results/his_cnn2.pkl')
     print(np.max(history['val_acc']))
     plot_loss(history, "fer")
     plot_acc(history, "fer")

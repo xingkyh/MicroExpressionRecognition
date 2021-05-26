@@ -22,7 +22,6 @@ class Fer2013(object):
         :return y_train： 训练标签
         """
         folder = os.path.join(self.folder, 'Training')
-        # 这里原来是list出多个表情类别的文件夹，后来发现服务器linux顺序不一致，会造成问题，所以固定读取顺序
         expressions = ['anger', 'disgust', 'fear', 'happy', 'sad', 'surprised', 'neutral', 'contempt']
         x_train = []
         y_train = []
@@ -48,7 +47,6 @@ class Fer2013(object):
         :return y_train： 训练标签
         """
         folder = os.path.join(self.folder, 'Training')
-        # 这里原来是list出多个表情类别的文件夹，后来发现服务器linux顺序不一致，会造成问题，所以固定读取顺序
         expressions = ['anger', 'disgust', 'fear', 'happy', 'sad', 'surprised', 'neutral', 'contempt']
         x_train = []
         y_train = []
@@ -97,7 +95,6 @@ class Fer2013(object):
         :return y_train： 训练标签
         """
         folder = os.path.join(self.folder, 'PublicTest')
-        # 这里原来是list出多个表情类别的文件夹，后来发现服务器linux顺序不一致，会造成问题，所以固定读取顺序
         expressions = ['anger', 'disgust', 'fear', 'happy', 'sad', 'surprised', 'neutral', 'contempt']
         x_train = []
         y_train = []
@@ -146,7 +143,6 @@ class Fer2013(object):
         :return y_train： 训练标签
         """
         folder = os.path.join(self.folder, 'PrivateTest')
-        # 这里原来是list出多个表情类别的文件夹，后来发现服务器linux顺序不一致，会造成问题，所以固定读取顺序
         expressions = ['anger', 'disgust', 'fear', 'happy', 'sad', 'surprised', 'neutral', 'contempt']
         x_train = []
         y_train = []
