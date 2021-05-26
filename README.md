@@ -12,3 +12,13 @@
 pip install -r requirements.txt
 ```
 
+## 数据准备
+
+使用FER2013、JAFFE和CK+数据集进行训练，下载数据集之后将其解压存放在dataset目录之下
+
+## 网络设计
+
+使用卷积神经网络，参考A Compact Deep Learning Model for Robust Facial Expression Recognition论文实现
+
+![](.\assets\CNN.png)
+
