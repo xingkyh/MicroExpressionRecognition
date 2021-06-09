@@ -2,6 +2,8 @@ opencv_python==4.5.2.52
 tqdm==4.60.0
 numpy==1.19.5
 matplotlib==3.4.2
-tensorflow_gpu==2.5.0
-scikit_learn==0.24.2
-tensorflow==2.5.0
+tensorflow-gpu~=2.5.0
+sklearn~=0.0
+scikit-learn~=0.24.2
+PyQt5~=5.15.4
+opencv-python~=4.5.2.52

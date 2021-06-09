@@ -3,9 +3,6 @@
 """
 import os
 import argparse
-
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 from tensorflow.keras.optimizers import SGD, Adam
@@ -16,6 +13,9 @@ from sklearn.model_selection import train_test_split
 from data import Fer2013, Jaffe, CK
 from model import CNN
 from visualize import plot_loss, plot_acc
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset", type=str, default="fer2013", help="dataset to train, fer2013 or jaffe or ck+")
