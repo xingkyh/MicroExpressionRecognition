@@ -11,11 +11,11 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 from data import Fer2013, Jaffe, CK
-from model import CNN
+from model import CNN, CNN1, CNN2
 from visualize import plot_loss, plot_acc
+import tensorflow as tf
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset", type=str, default="fer2013", help="dataset to train, fer2013 or jaffe or ck+")
@@ -25,6 +25,9 @@ parser.add_argument("--plot_history", type=bool, default=True)
 opt = parser.parse_args()
 his = None
 print(opt)
+config = tf.compat.v1.ConfigProto(allow_soft_placement=True)
+config.gpu_options.per_process_gpu_memory_fraction = 0.5
+tf.compat.v1.keras.backend.set_session(tf.compat.v1.Session(config=config))
 
 if opt.dataset == "fer2013":
     expressions, x_train, y_train = Fer2013().gen_train()
@@ -45,7 +48,7 @@ if opt.dataset == "fer2013":
     callback = [
         #     EarlyStopping(monitor='val_loss', patience=50, verbose=True),
         #     ReduceLROnPlateau(monitor='lr', factor=0.1, patience=20, verbose=True),
-        ModelCheckpoint('./models/cnn2_best_weights.h5', monitor='val_acc', verbose=True, save_best_only=True,
+        ModelCheckpoint('./models/cnn_best_weights.h5', monitor='val_acc', verbose=True, save_best_only=True,
                         save_weights_only=True)]
 
     train_generator = ImageDataGenerator(rotation_range=10,
@@ -93,7 +96,7 @@ elif opt.dataset == "jaffe":
     callback = [
         # EarlyStopping(monitor='val_loss', patience=50, verbose=True),
         # ReduceLROnPlateau(monitor='lr', factor=0.1, patience=15, verbose=True),
-        ModelCheckpoint('./models/cnn3_best_weights.h5', monitor='val_accuracy', verbose=True, save_best_only=True,
+        ModelCheckpoint('./models/cnn_best_weights.h5', monitor='val_accuracy', verbose=True, save_best_only=True,
                         save_weights_only=True)]
     history_jaffe = model.fit(train_generator, steps_per_epoch=len(y_train) // opt.batch_size, epochs=opt.epochs,
                               validation_data=valid_generator, validation_steps=len(y_valid) // opt.batch_size,
@@ -129,3 +132,4 @@ else:
 if opt.plot_history:
     plot_loss(his.history, opt.dataset)
     plot_acc(his.history, opt.dataset)
+    model.save_weights("./models/cnn_best_weights.h5")

@@ -40,9 +40,6 @@ def generate_faces(face_img, img_size=48):
     resized_images.append(face_img[:, :])
     resized_images.append(face_img[2:45, :])
     resized_images.append(cv2.flip(face_img[:, :], 1))
-    # resized_images.append(cv2.flip(face_img[2], 1))
-    # resized_images.append(cv2.flip(face_img[3], 1))
-    # resized_images.append(cv2.flip(face_img[4], 1))
     resized_images.append(face_img[0:45, 0:45])
     resized_images.append(face_img[2:47, 0:45])
     resized_images.append(face_img[2:47, 2:47])
@@ -62,14 +59,12 @@ def predict_expression(img_path, model):
     """
 
     border_color = (0, 0, 0)  # 黑框
-    font_color = (255, 255, 255)  # 白字
+    font_color = (0, 0, 128)
 
     img, img_gray, faces = face_detect(img_path)
     if len(faces) == 0:
-        return 'no', [0, 0, 0, 0, 0, 0, 0, 0]
+        return img
     # 遍历每一个脸
-    emotions = []
-    result_possibilitys = []
     for (x, y, w, h) in faces:
         face_img_gray = img_gray[y:y + h + 10, x:x + w + 10]
         faces_img_gray = generate_faces(face_img_gray)
@@ -79,18 +74,16 @@ def predict_expression(img_path, model):
         label_index = np.argmax(result_sum, axis=0)
         emotion = index2emotion(label_index, 'cn')
         cv2.rectangle(img, (x - 10, y - 10), (x + w + 10, y + h + 10), border_color, thickness=2)
-        img = cv2_img_add_text(img, emotion, x + 30, y + 30, font_color, 20)
-        emotions.append(emotion)
-        result_possibilitys.append(result_sum)
-    if not os.path.exists("./output"):
-        os.makedirs("./output")
-    cv2.imwrite('./output/rst.png', img)
-    return emotions[0], result_possibilitys[0]
+        img = cv2_img_add_text(img, emotion, x + 30, y + 30, font_color, 30)
+    # if not os.path.exists("./output"):
+    #     os.makedirs("./output")
+    # cv2.imwrite('./output/rst.png', img)
+    return img
 
 
 if __name__ == '__main__':
     from model import CNN
 
     model = CNN()
-    model.load_weights('./models/cnn3_best_weights.h5')
+    model.load_weights('./models/cnn_best_weights.h5')
     predict_expression('./dataset/test/test2.jpg', model)

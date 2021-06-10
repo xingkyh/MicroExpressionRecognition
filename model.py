@@ -35,6 +35,7 @@ def CNN(input_shape=(48, 48, 1), n_classes=8):
     x = Dense(n_classes, activation='softmax')(x)
 
     model = Model(inputs=input_layer, outputs=x)
+
     return model
 
 
